@@ -18,7 +18,7 @@ if(date("H:i") == "01:00"){
         "ISHA"      =>  $hentry->elements[date("j")]->childNodes[7]->textContent,
     );
 
-    echo file_put_contents('arNamazDateDerbent2.txt', serialize($arNamazDate));
+    file_put_contents('arNamazDateDerbent2.txt', serialize($arNamazDate));
 
     $arMessageId = [];
     $arMessageId = unserialize(file_get_contents('messageids.php'));
@@ -134,25 +134,7 @@ if(date("H:i") == $arNamazDate["FAJR"]){
     $arEventFields = array(
         "NAMAZ_NAME"          => urlencode(date("H:i ") . "Утренний намаз"),
     );
-    if(date("w", time()) == 5){
-        $arEventFields["MESSAGE"] = "
-        
-Икъамат (спустя 25 минут) в ".date("H:i", time()+60*25)."
-        
-Пророк (мир ему и благословение Аллаха) сказал: «Люди должны перестать пренебрегать пятничными молитвами, не то Аллах запечатает их сердца, и тогда они станут безразличными» (Муслим).
-
-Длительность светового дня:
-". $dayLengthArr["2"] . " часов, " . $dayLengthArr["1"] . " минут";
-    }else{
-        $arEventFields["MESSAGE"] = "
-        
-Икъамат (спустя 25 минут) в ".date("H:i", time()+60*25)."
-
-Длительность светового дня: ". $dayLengthArr["2"] . " часов, " . $dayLengthArr["1"] . " минут";
-    }
     $arEventFields["MESSAGE"] .= '
-
-От рассвета до восхода солнца спать нежелательно.
 
 Расписание на день:
 Фаджр '.$arNamazDate["FAJR"].'
@@ -175,61 +157,27 @@ elseif(date("H:i", time()+60*15) == $arNamazDate["FAJR"]){
 }
 */
 
-//спустя 25 минут после Фаджра
-
-//elseif(date("H:i", time()-60*25) == $arNamazDate["FAJR"]){
-//    $arEventFields = array(
-//        "MESSAGE"             =>"",
-//        "NAMAZ_NAME"          => date("H:i ") . "Икъамат. (спустя 25 минут)",
-//    );
-//}
 
 elseif(date("H:i") == $arNamazDate["ZUXR"]){
     $arEventFields = array(
-        "MESSAGE"             => "
-
-Икъамат (спустя 20 минут) в ".date("H:i", time()+60*20),
         "NAMAZ_NAME"          => date("H:i ") . "Полуденный намаз.",
     );
 }
 
-//elseif(date("H:i", time()-60*20) == $arNamazDate["ZUXR"]){
-//    $arEventFields = array(
-//        "MESSAGE"             =>"",
-//        "NAMAZ_NAME"          => date("H:i ") . "Икъамат. (спустя 20 минут)",
-//    );
-//}
-
 elseif(date("H:i") == $arNamazDate["ASR"]){
     $arEventFields = array(
-        "MESSAGE"             => "
-
-Икъамат (спустя 15 минут) в ".date("H:i", time()+60*15),
         "NAMAZ_NAME"          => date("H:i ") . "ПОСЛЕполуденный намаз.",
     );
 }
 
 elseif(date("H:i") == $arNamazDate["MAGRIB"]){
     $arEventFields = array(
-        "MESSAGE"             => "
-
-Икъамат (спустя 5 минут) в ".date("H:i", time()+60*5)."
-
-В вечернее время сон нежелателен.
-                                 ",
         "NAMAZ_NAME"          => date("H:i ") . "Вечерний намаз.",
     );
 }
 
 elseif(date("H:i") == $arNamazDate["ISHA"]){
-    $newNightSleepTime2 = $nightSleepTime[1] < 10 ? '0' . $nightSleepTime[1] : $nightSleepTime[1];
     $arEventFields = array(
-        "MESSAGE"             => "
-
-Икъамат (спустя 20 минут) в ".date("H:i", time()+60*20)."
-
-Рекомендуемое время сна:
-не позднее " . $nightSleepTime[2] . ":" . $newNightSleepTime2,
         "NAMAZ_NAME"          => date("H:i ") . "Ночной намаз.",
     );
 }

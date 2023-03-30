@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap:https://mollakent.ru/index.php?sitemap.xml
+Sitemap:https://mollakent.ru/index.php?sitemap_1.xml
